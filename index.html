@@ -55,6 +55,15 @@
             width: 100dvw;
         }
 
+        /* Hide horizontal scrollbars for presets */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         /* LED Grid Dot Overlay Effect */
         .led-dot-matrix {
             background-image: radial-gradient(rgba(0, 0, 0, 0.25) 20%, transparent 20%);
@@ -113,172 +122,174 @@
 <body class="bg-slate-950 text-slate-100 overflow-x-hidden">
 
     <!-- SETTINGS VIEW WRAPPER -->
-    <div id="settings-view" class="min-h-dvh w-full overflow-y-auto custom-scroll p-4 md:p-6 flex flex-col justify-between max-w-2xl mx-auto">
+    <div id="settings-view" class="h-dvh w-full overflow-y-auto custom-scroll p-2.5 sm:p-4 flex flex-col justify-between max-w-lg mx-auto text-slate-100">
         
         <!-- Header & Developer Info Section -->
-        <header class="mb-6 text-center border-b border-slate-800 pb-4">
-            <!-- Developer Info Banner (Explicitly Required) -->
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 text-xs font-semibold mb-3 neon-border">
+        <header class="mb-2 text-center border-b border-slate-800/80 pb-2 flex-shrink-0">
+            <!-- Developer Info Banner -->
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 text-[11px] font-semibold mb-1 neon-border">
                 <i class="fa-solid fa-code-branch text-indigo-400"></i>
                 <span>개발자: 가치있는미래교육연구소 대표 김병찬</span>
             </div>
             
-            <h1 class="text-2xl md:text-3xl font-black tracking-tight text-white flex items-center justify-center gap-2">
-                <i class="fa-solid fa-lightbulb text-yellow-400 animate-pulse"></i>
+            <h1 class="text-lg sm:text-xl font-black tracking-tight text-white flex items-center justify-center gap-2">
+                <i class="fa-solid fa-lightbulb text-yellow-400 animate-pulse text-sm"></i>
                 <span>스마트 모바일 전광판</span>
             </h1>
-            <p class="text-xs text-slate-400 mt-1">스마트폰을 화려한 LED 디스플레이로 만들어보세요</p>
         </header>
 
         <!-- Live Mini Preview Window -->
-        <section class="mb-6">
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-                <i class="fa-solid fa-desktop mr-1"></i>실시간 미리보기
-            </label>
-            <div id="preview-box" class="relative w-full h-32 rounded-xl overflow-hidden border-2 border-slate-700 flex items-center justify-center transition-colors duration-200 shadow-inner">
+        <section class="mb-2 flex-shrink-0">
+            <div class="flex justify-between items-center mb-1">
+                <label class="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+                    <i class="fa-solid fa-desktop"></i>실시간 미리보기
+                </label>
+            </div>
+            <div id="preview-box" class="relative w-full h-20 sm:h-24 rounded-xl overflow-hidden border-2 border-slate-700 flex items-center justify-center transition-colors duration-200 shadow-inner">
                 <div id="preview-led-grid" class="absolute inset-0 led-dot-matrix z-10 opacity-30"></div>
-                <div id="preview-text-container" class="relative z-0 whitespace-nowrap px-4 font-sans-kr flex items-center justify-center text-center text-2xl md:text-3xl font-black tracking-wide">
+                <div id="preview-text-container" class="relative z-0 whitespace-nowrap px-3 font-sans-kr flex items-center justify-center text-center text-xl sm:text-2xl font-black tracking-wide">
                     미리보기 텍스트
                 </div>
             </div>
         </section>
 
         <!-- Form Controls Container -->
-        <main class="space-y-5">
+        <main class="space-y-2 sm:space-y-2.5 flex-grow flex flex-col justify-center">
             
             <!-- 1. Text Input -->
-            <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800">
-                <label for="text-input" class="block text-sm font-bold text-slate-200 mb-2 flex justify-between">
-                    <span><i class="fa-solid fa-pen-to-square text-blue-400 mr-1.5"></i>표시할 문구</span>
-                    <span id="char-count" class="text-xs text-slate-500">0자</span>
-                </label>
+            <div class="bg-slate-900/90 p-2.5 rounded-xl border border-slate-800">
+                <div class="flex justify-between items-center mb-1.5">
+                    <label for="text-input" class="text-xs font-bold text-slate-200 flex items-center gap-1">
+                        <i class="fa-solid fa-pen-to-square text-blue-400"></i>표시할 문구
+                    </label>
+                    <span id="char-count" class="text-[11px] text-slate-500">0자</span>
+                </div>
                 <input type="text" id="text-input" value="응원합니다! 파이팅!" placeholder="전광판에 띄울 글자를 입력하세요"
-                    class="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 text-white font-medium transition-all text-base">
+                    class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 text-white font-medium transition-all text-sm">
                 
                 <!-- Preset Quick Buttons -->
-                <div class="flex flex-wrap gap-1.5 mt-3">
-                    <button type="button" class="preset-btn px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded text-xs text-slate-300 transition">WELCOME</button>
-                    <button type="button" class="preset-btn px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded text-xs text-slate-300 transition">❤️ 사랑해요 ❤️</button>
-                    <button type="button" class="preset-btn px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded text-xs text-slate-300 transition">택시 탑승중</button>
-                    <button type="button" class="preset-btn px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded text-xs text-slate-300 transition">조용히 해주세요</button>
+                <div class="flex items-center gap-1.5 mt-2 overflow-x-auto no-scrollbar pb-0.5">
+                    <button type="button" class="preset-btn shrink-0 px-2 py-0.5 bg-slate-800 hover:bg-slate-700 rounded text-[11px] text-slate-300 transition">WELCOME</button>
+                    <button type="button" class="preset-btn shrink-0 px-2 py-0.5 bg-slate-800 hover:bg-slate-700 rounded text-[11px] text-slate-300 transition">❤️ 사랑해요 ❤️</button>
+                    <button type="button" class="preset-btn shrink-0 px-2 py-0.5 bg-slate-800 hover:bg-slate-700 rounded text-[11px] text-slate-300 transition">택시 탑승중</button>
+                    <button type="button" class="preset-btn shrink-0 px-2 py-0.5 bg-slate-800 hover:bg-slate-700 rounded text-[11px] text-slate-300 transition">조용히 해주세요</button>
                 </div>
             </div>
 
             <!-- 2. Text & Background Color Pickers -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
+            <div class="grid grid-cols-2 gap-2">
                 <!-- Text Color Selection -->
-                <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800">
-                    <label class="block text-sm font-bold text-slate-200 mb-2 flex items-center justify-between">
-                        <span><i class="fa-solid fa-palette text-emerald-400 mr-1.5"></i>글씨 색상</span>
-                        <input type="color" id="text-color-picker" value="#000000" class="w-7 h-7 rounded border-0 cursor-pointer bg-transparent">
-                    </label>
-                    <div class="flex items-center gap-2 mt-2">
-                        <button type="button" class="color-preset-text w-7 h-7 rounded-full bg-[#000000] ring-2 ring-slate-700" data-color="#000000" title="검정색"></button>
-                        <button type="button" class="color-preset-text w-7 h-7 rounded-full bg-[#00FF66] ring-2 ring-slate-700" data-color="#00FF66" title="네온 그린"></button>
-                        <button type="button" class="color-preset-text w-7 h-7 rounded-full bg-[#00F0FF] ring-2 ring-slate-700" data-color="#00F0FF" title="시안 블루"></button>
-                        <button type="button" class="color-preset-text w-7 h-7 rounded-full bg-[#FFE600] ring-2 ring-slate-700" data-color="#FFE600" title="네온 옐로우"></button>
-                        <button type="button" class="color-preset-text w-7 h-7 rounded-full bg-[#FF007F] ring-2 ring-slate-700" data-color="#FF007F" title="핫 핑크"></button>
-                        <button type="button" class="color-preset-text w-7 h-7 rounded-full bg-[#FF3333] ring-2 ring-slate-700" data-color="#FF3333" title="레드"></button>
+                <div class="bg-slate-900/90 p-2.5 rounded-xl border border-slate-800">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="text-xs font-bold text-slate-200 flex items-center gap-1">
+                            <i class="fa-solid fa-palette text-emerald-400"></i>글씨 색상
+                        </span>
+                        <input type="color" id="text-color-picker" value="#000000" class="w-6 h-6 rounded border-0 cursor-pointer bg-transparent">
+                    </div>
+                    <div class="flex items-center gap-1.5 justify-between">
+                        <button type="button" class="color-preset-text w-6 h-6 rounded-full bg-[#000000] ring-1 ring-slate-600" data-color="#000000" title="검정색"></button>
+                        <button type="button" class="color-preset-text w-6 h-6 rounded-full bg-[#00FF66] ring-1 ring-slate-600" data-color="#00FF66" title="네온 그린"></button>
+                        <button type="button" class="color-preset-text w-6 h-6 rounded-full bg-[#00F0FF] ring-1 ring-slate-600" data-color="#00F0FF" title="시안 블루"></button>
+                        <button type="button" class="color-preset-text w-6 h-6 rounded-full bg-[#FFE600] ring-1 ring-slate-600" data-color="#FFE600" title="네온 옐로우"></button>
+                        <button type="button" class="color-preset-text w-6 h-6 rounded-full bg-[#FF007F] ring-1 ring-slate-600" data-color="#FF007F" title="핫 핑크"></button>
+                        <button type="button" class="color-preset-text w-6 h-6 rounded-full bg-[#FF3333] ring-1 ring-slate-600" data-color="#FF3333" title="레드"></button>
                     </div>
                 </div>
 
                 <!-- Background Color Selection -->
-                <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800">
-                    <label class="block text-sm font-bold text-slate-200 mb-2 flex items-center justify-between">
-                        <span><i class="fa-solid fa-fill-drip text-purple-400 mr-1.5"></i>배경 색상</span>
-                        <input type="color" id="bg-color-picker" value="#FFFFFF" class="w-7 h-7 rounded border-0 cursor-pointer bg-transparent">
-                    </label>
-                    <div class="flex items-center gap-2 mt-2">
-                        <button type="button" class="color-preset-bg w-7 h-7 rounded-full bg-[#FFFFFF] ring-2 ring-slate-700" data-color="#FFFFFF" title="흰색"></button>
-                        <button type="button" class="color-preset-bg w-7 h-7 rounded-full bg-[#000000] ring-2 ring-slate-700" data-color="#000000" title="리얼 블랙"></button>
-                        <button type="button" class="color-preset-bg w-7 h-7 rounded-full bg-[#050B14] ring-2 ring-slate-700" data-color="#050B14" title="다크 블루"></button>
-                        <button type="button" class="color-preset-bg w-7 h-7 rounded-full bg-[#1A0000] ring-2 ring-slate-700" data-color="#1A0000" title="다크 레드"></button>
-                        <button type="button" class="color-preset-bg w-7 h-7 rounded-full bg-[#001A0D] ring-2 ring-slate-700" data-color="#001A0D" title="다크 그린"></button>
+                <div class="bg-slate-900/90 p-2.5 rounded-xl border border-slate-800">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="text-xs font-bold text-slate-200 flex items-center gap-1">
+                            <i class="fa-solid fa-fill-drip text-purple-400"></i>배경 색상
+                        </span>
+                        <input type="color" id="bg-color-picker" value="#FFFFFF" class="w-6 h-6 rounded border-0 cursor-pointer bg-transparent">
+                    </div>
+                    <div class="flex items-center gap-1.5 justify-between">
+                        <button type="button" class="color-preset-bg w-6 h-6 rounded-full bg-[#FFFFFF] ring-1 ring-slate-600" data-color="#FFFFFF" title="흰색"></button>
+                        <button type="button" class="color-preset-bg w-6 h-6 rounded-full bg-[#000000] ring-1 ring-slate-600" data-color="#000000" title="리얼 블랙"></button>
+                        <button type="button" class="color-preset-bg w-6 h-6 rounded-full bg-[#050B14] ring-1 ring-slate-600" data-color="#050B14" title="다크 블루"></button>
+                        <button type="button" class="color-preset-bg w-6 h-6 rounded-full bg-[#1A0000] ring-1 ring-slate-600" data-color="#1A0000" title="다크 레드"></button>
+                        <button type="button" class="color-preset-bg w-6 h-6 rounded-full bg-[#001A0D] ring-1 ring-slate-600" data-color="#001A0D" title="다크 그린"></button>
                     </div>
                 </div>
-
             </div>
 
             <!-- 3. Text Effect & Animation Selection -->
-            <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800">
-                <label class="block text-sm font-bold text-slate-200 mb-2">
-                    <i class="fa-solid fa-wand-magic-sparkles text-amber-400 mr-1.5"></i>움직임 효과
+            <div class="bg-slate-900/90 p-2.5 rounded-xl border border-slate-800">
+                <label class="block text-xs font-bold text-slate-200 mb-1.5">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-400 mr-1"></i>움직임 효과
                 </label>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    <button type="button" id="effect-left" data-effect="left" class="effect-btn active border-2 border-blue-500 bg-blue-950/60 text-blue-300 py-2.5 px-3 rounded-lg text-xs font-bold flex flex-col items-center gap-1 transition">
-                        <i class="fa-solid fa-arrow-left text-sm"></i>
-                        <span>왼쪽 이동</span>
+                <div class="grid grid-cols-4 gap-1.5">
+                    <button type="button" id="effect-left" data-effect="left" class="effect-btn active border-2 border-blue-500 bg-blue-950/60 text-blue-300 py-1.5 px-1 rounded-lg text-[11px] font-bold flex flex-col items-center gap-0.5 transition">
+                        <i class="fa-solid fa-arrow-left text-xs"></i>
+                        <span>왼쪽</span>
                     </button>
-                    <button type="button" id="effect-right" data-effect="right" class="effect-btn border-2 border-slate-700 bg-slate-950 text-slate-400 py-2.5 px-3 rounded-lg text-xs font-bold flex flex-col items-center gap-1 transition">
-                        <i class="fa-solid fa-arrow-right text-sm"></i>
-                        <span>오른쪽 이동</span>
+                    <button type="button" id="effect-right" data-effect="right" class="effect-btn border-2 border-slate-700 bg-slate-950 text-slate-400 py-1.5 px-1 rounded-lg text-[11px] font-bold flex flex-col items-center gap-0.5 transition">
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                        <span>오른쪽</span>
                     </button>
-                    <button type="button" id="effect-blink" data-effect="blink" class="effect-btn border-2 border-slate-700 bg-slate-950 text-slate-400 py-2.5 px-3 rounded-lg text-xs font-bold flex flex-col items-center gap-1 transition">
-                        <i class="fa-regular fa-lightbulb text-sm"></i>
+                    <button type="button" id="effect-blink" data-effect="blink" class="effect-btn border-2 border-slate-700 bg-slate-950 text-slate-400 py-1.5 px-1 rounded-lg text-[11px] font-bold flex flex-col items-center gap-0.5 transition">
+                        <i class="fa-regular fa-lightbulb text-xs"></i>
                         <span>깜빡임</span>
                     </button>
-                    <button type="button" id="effect-static" data-effect="static" class="effect-btn border-2 border-slate-700 bg-slate-950 text-slate-400 py-2.5 px-3 rounded-lg text-xs font-bold flex flex-col items-center gap-1 transition">
-                        <i class="fa-solid fa-pause text-sm"></i>
-                        <span>정지 (고정)</span>
+                    <button type="button" id="effect-static" data-effect="static" class="effect-btn border-2 border-slate-700 bg-slate-950 text-slate-400 py-1.5 px-1 rounded-lg text-[11px] font-bold flex flex-col items-center gap-0.5 transition">
+                        <i class="fa-solid fa-pause text-xs"></i>
+                        <span>정지</span>
                     </button>
                 </div>
             </div>
 
-            <!-- 4. Speed Adjustment Slider -->
-            <div id="speed-control-container" class="bg-slate-900/90 p-4 rounded-xl border border-slate-800">
-                <div class="flex justify-between items-center mb-2">
-                    <label for="speed-slider" class="text-sm font-bold text-slate-200">
-                        <i class="fa-solid fa-gauge-high text-rose-400 mr-1.5"></i>움직임 속도
-                    </label>
-                    <span id="speed-value" class="text-xs font-bold text-blue-400 bg-blue-950 px-2 py-0.5 rounded border border-blue-800/50">보통 (5)</span>
-                </div>
-                <input type="range" id="speed-slider" min="1" max="10" value="5" step="1" class="w-full accent-blue-500 bg-slate-950 h-2 rounded-lg cursor-pointer">
-                <div class="flex justify-between text-[10px] text-slate-500 mt-1">
-                    <span>느림</span>
-                    <span>보통</span>
-                    <span>매우 빠름</span>
-                </div>
-            </div>
-
-            <!-- 5. Font Style & Matrix Grid Options -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Font Selection -->
-                <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800">
-                    <label for="font-select" class="block text-sm font-bold text-slate-200 mb-2">
-                        <i class="fa-solid fa-font text-teal-400 mr-1.5"></i>글꼴 스타일
-                    </label>
-                    <select id="font-select" class="w-full px-3 py-2.5 bg-slate-950 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500">
-                        <option value="font-sans-kr" selected>고딕 체 (선명함)</option>
-                        <option value="font-heavy">울트라 볼드 (굵은 체)</option>
-                        <option value="font-orbitron">디지털 네온 (Orbitron)</option>
-                        <option value="font-retro">레트로 도트 (Press Start 2P)</option>
-                    </select>
-                </div>
-
-                <!-- Matrix Overlay Toggle -->
-                <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800 flex items-center justify-between">
-                    <div>
-                        <span class="block text-sm font-bold text-slate-200">LED 도트 픽셀 효과</span>
-                        <span class="text-xs text-slate-400">전광판 질감 그리드 덧씌우기</span>
+            <!-- 4. Speed & Options Grid -->
+            <div class="grid grid-cols-2 gap-2">
+                <!-- Speed Slider -->
+                <div id="speed-control-container" class="bg-slate-900/90 p-2.5 rounded-xl border border-slate-800 flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-1">
+                        <label for="speed-slider" class="text-xs font-bold text-slate-200 flex items-center gap-1">
+                            <i class="fa-solid fa-gauge-high text-rose-400"></i>속도
+                        </label>
+                        <span id="speed-value" class="text-[10px] font-bold text-blue-400 bg-blue-950 px-1.5 py-0.5 rounded border border-blue-800/50">보통 (5)</span>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" id="matrix-toggle" checked class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                    </label>
+                    <input type="range" id="speed-slider" min="1" max="10" value="5" step="1" class="w-full accent-blue-500 bg-slate-950 h-1.5 rounded-lg cursor-pointer my-1">
+                    <div class="flex justify-between text-[9px] text-slate-500">
+                        <span>느림</span>
+                        <span>빠름</span>
+                    </div>
+                </div>
+
+                <!-- Font Style & LED Dot Matrix Toggle -->
+                <div class="bg-slate-900/90 p-2.5 rounded-xl border border-slate-800 flex flex-col justify-between gap-1.5">
+                    <div>
+                        <label for="font-select" class="block text-xs font-bold text-slate-200 mb-1">
+                            <i class="fa-solid fa-font text-teal-400 mr-1"></i>글꼴
+                        </label>
+                        <select id="font-select" class="w-full px-2 py-1 bg-slate-950 border border-slate-700 rounded text-white text-xs focus:outline-none focus:border-blue-500">
+                            <option value="font-sans-kr" selected>고딕 체</option>
+                            <option value="font-heavy">울트라 볼드</option>
+                            <option value="font-orbitron">디지털 네온</option>
+                            <option value="font-retro">레트로 도트</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1 border-t border-slate-800/80">
+                        <span class="text-[11px] font-bold text-slate-300">LED 도트 효과</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="matrix-toggle" checked class="sr-only peer">
+                            <div class="w-8 h-4 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+                        </label>
+                    </div>
                 </div>
             </div>
 
         </main>
 
         <!-- START DISPLAY BUTTON -->
-        <footer class="mt-8 mb-4">
-            <button type="button" id="start-btn" class="w-full py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-black text-lg md:text-xl rounded-2xl shadow-lg hover:shadow-indigo-500/30 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-3">
-                <i class="fa-solid fa-play text-xl"></i>
+        <footer class="mt-2 mb-1 flex-shrink-0">
+            <button type="button" id="start-btn" class="w-full py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-black text-base rounded-xl shadow-md hover:shadow-indigo-500/30 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-play text-base"></i>
                 <span>전광판 실행하기</span>
             </button>
-            <p class="text-[11px] text-center text-slate-500 mt-2">
-                <i class="fa-solid fa-rotate mr-1"></i>스마트폰을 세로로 들어도 가로 모드로 자동 변환되어 실행됩니다.
+            <p class="text-[10px] text-center text-slate-500 mt-1">
+                <i class="fa-solid fa-rotate mr-0.5"></i>세로/가로 자동 회전 지원
             </p>
         </footer>
 
